@@ -23,7 +23,6 @@ var Index = React.createClass({
             name= "Stein"
             src= "./assets/images/kitty.png"
           />
-
         </div>
       );
     }
