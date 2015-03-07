@@ -1,5 +1,8 @@
-var Index = React.createClass({
-    propTypes: {},
+var Monster = React.createClass({displayName: "Monster",
+    propTypes: {
+      name: React.PropTypes.string,
+      src: React.PropTypes.string
+    },
     mixins : [],
 
     getInitialState: function() {
@@ -16,21 +19,10 @@ var Index = React.createClass({
 
     render : function() {
       return (
-        <div>
-          <h1>teramachy</h1>
-
-          <Monster
-            name= "Stein"
-            src= "./assets/images/kitty.png"
-          />
-
-        </div>
+        React.createElement("div", {className: "monster"}, 
+          React.createElement("img", {src: this.props.src}), 
+          React.createElement("h2", null, "My name is ", this.props.name, "!")
+        )
       );
     }
-
 });
-
-React.render(
-    <Index/>,
-    document.querySelector('#content')
-);

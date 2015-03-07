@@ -16,13 +16,21 @@ var Index = React.createClass({displayName: "Index",
 
     render : function() {
       return (
-        React.createElement("h1", null, "Hello, world!")
+        React.createElement("div", null, 
+          React.createElement("h1", null, "teramachy"), 
+
+          React.createElement(Monster, {
+            name: "Stein", 
+            src: "./assets/images/kitty.png"}
+          )
+
+        )
       );
     }
 
 });
 
-React.renderComponent(
+React.render(
     React.createElement(Index, null),
-    document.querySelector('#example')
+    document.querySelector('#content')
 );
