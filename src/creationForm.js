@@ -1,4 +1,4 @@
-var Information = React.createClass({
+var CreationForm = React.createClass({
     propTypes: {
       species: React.PropTypes.array
     },

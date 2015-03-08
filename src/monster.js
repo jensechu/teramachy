@@ -2,25 +2,41 @@ var Monster = React.createClass({
     propTypes: {
       name: React.PropTypes.string,
       species: React.PropTypes.string,
-      hunger: React.PropTypes.number
+      hunger: React.PropTypes.number,
+      showCreationForm: React.PropTypes.bool
     },
     mixins : [],
 
     getInitialState: function() {
-      return {
+      var data = {
         name: '',
         species: 'egg',
-        hunger: 0
+        hunger: 0,
+        showCreationForm: true
       };
+
+      if (localStorage.monster) {
+        data = JSON.parse(localStorage.monster);
+      }
+
+      return data;
     },
 
     handleCreation: function(e) {
       e.preventDefault();
 
-      this.setState({
+      var state = {
         name: this.refs.information.refs.name.getDOMNode().value,
-        species: this.refs.information.refs.species.getDOMNode().value
-      });
+        species: this.refs.information.refs.species.getDOMNode().value,
+        showCreationForm: false
+      }
+
+      this.setState(state);
+      this.saveCreature(state);
+    },
+
+    saveCreature: function(state) {
+      localStorage.setItem('monster', JSON.stringify(state));
     },
 
     componentWillMount : function() {},
@@ -41,7 +57,7 @@ var Monster = React.createClass({
           <h2>Name: {this.state.name}</h2>
           <h2>Species: {this.state.species}</h2>
 
-          <Information ref='information' handleCreation={this.handleCreation} />
+          { this.state.showCreationForm ? <CreationForm ref='information' handleCreation={this.handleCreation} /> : null }
         </div>
       );
     }
