@@ -3,16 +3,19 @@ var Monster = React.createClass({
       name: React.PropTypes.string,
       species: React.PropTypes.string,
       hunger: React.PropTypes.number,
-      showCreationForm: React.PropTypes.bool
+      showCreationForm: React.PropTypes.bool,
+      showHealthMeter: React.PropTypes.bool
     },
-    mixins : [],
+    mixins: [SetIntervalMixin],
 
     getInitialState: function() {
       var data = {
         name: '',
         species: 'egg',
         hunger: 0,
-        showCreationForm: true
+        creationDate: false,
+        showCreationForm: true,
+        showStats: false
       };
 
       if (localStorage.monster) {
@@ -28,15 +31,35 @@ var Monster = React.createClass({
       var state = {
         name: this.refs.information.refs.name.getDOMNode().value,
         species: this.refs.information.refs.species.getDOMNode().value,
-        showCreationForm: false
+        hunger: 50,
+        creationDate: new Date(),
+        lastUpdated: 0,
+        showCreationForm: false,
+        showHealthMeter: true
       }
 
       this.setState(state);
-      this.saveCreature(state);
+      this._saveCreature(state);
+      this.setInterval(this._decreaseStats, 1000);
     },
 
-    saveCreature: function(state) {
+    _saveCreature: function(state) {
       localStorage.setItem('monster', JSON.stringify(state));
+    },
+
+    _decreaseStats: function() {
+      var hunger = this.state.hunger;
+
+      if (hunger > 5) {
+        hunger = hunger - 5;
+      }
+
+      var state = {
+        hunger: hunger
+      }
+
+      this.setState(state);
+      this._saveCreature(this.state);
     },
 
     componentWillMount : function() {},
@@ -58,6 +81,7 @@ var Monster = React.createClass({
           <h2>Species: {this.state.species}</h2>
 
           { this.state.showCreationForm ? <CreationForm ref='information' handleCreation={this.handleCreation} /> : null }
+          { this.state.showHealthMeter ? <HealthMeter ref='stats' hunger={this.state.hunger} /> : null }
         </div>
       );
     }
