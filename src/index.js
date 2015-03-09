@@ -19,10 +19,7 @@ var Index = React.createClass({
         <div>
           <h1>teramachy</h1>
 
-          <Monster
-            name= "Stein"
-            src= "./assets/images/kitty.png"
-          />
+          <Monster />
         </div>
       );
     }
