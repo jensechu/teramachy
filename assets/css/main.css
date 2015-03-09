@@ -5,3 +5,17 @@ body {
 #content {
   text-align: center;
 }
+
+.form-row {
+  margin-bottom: 15px;
+}
+
+label {
+  margin-right: 15px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+form img {
+  margin-bottom: 20px;
+}

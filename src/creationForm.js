@@ -5,7 +5,7 @@ var CreationForm = React.createClass({
 
     getDefaultProps: function() {
       return {
-        species: ['kitty', 'dog', 'mouse']
+        species: ['Cat', 'Dog', 'Bear']
       };
     },
 
@@ -17,18 +17,25 @@ var CreationForm = React.createClass({
       }.bind(this))
       return (
         <form name='monsterInformation'>
-          <input
-            ref='name'
-            type='text'
-            onChange={this.props.update}
-          />
+          <img src={this.props.speciesImg}></img>
+          <div className='form-row'>
+            <label>Name:</label>
+            <input
+              ref='name'
+              type='text'
+              onChange={this.props.update}
+            />
+          </div>
 
-          <select
-            ref='species'
-            onChange={this.props.update}>
-            {species}
+          <div className='form-row'>
+            <label>Species:</label>
+            <select
+              ref='species'
+              onChange={this.props.update}>
+              {species}
 
-          </select>
+            </select>
+          </div>
 
           <button onClick={this.props.handleCreation}>Create</button>
         </form>

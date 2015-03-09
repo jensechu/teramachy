@@ -4,6 +4,7 @@ var Monster = React.createClass({
       species: React.PropTypes.string,
       hunger: React.PropTypes.number,
       showCreationForm: React.PropTypes.bool,
+      showCreatureInfo: React.PropTypes.bool,
       showHealthMeter: React.PropTypes.bool
     },
     mixins: [SetIntervalMixin],
@@ -29,12 +30,13 @@ var Monster = React.createClass({
       e.preventDefault();
 
       var state = {
-        name: this.refs.information.refs.name.getDOMNode().value,
-        species: this.refs.information.refs.species.getDOMNode().value,
+        name: this.refs.creationInfo.refs.name.getDOMNode().value,
+        species: this.refs.creationInfo.refs.species.getDOMNode().value,
         hunger: 50,
         creationDate: new Date(),
         lastUpdated: 0,
         showCreationForm: false,
+        showCreatureInfo: true,
         showHealthMeter: true
       }
 
@@ -75,12 +77,9 @@ var Monster = React.createClass({
 
     render : function() {
       return (
-        <div className='monster'>
-          <img src={this._formattedImageURL(this.state.species)}></img>
-          <h2>Name: {this.state.name}</h2>
-          <h2>Species: {this.state.species}</h2>
-
-          { this.state.showCreationForm ? <CreationForm ref='information' handleCreation={this.handleCreation} /> : null }
+        <div>
+          { this.state.showCreationForm ? <CreationForm ref='creationInfo' handleCreation={this.handleCreation} speciesImg={this._formattedImageURL(this.state.species)} /> : null }
+          { this.state.showCreatureInfo ? <CreatureInfo ref='creatureInfo' name={this.state.name} species={this.state.species} speciesImg={this._formattedImageURL(this.state.species)} /> : null }
           { this.state.showHealthMeter ? <HealthMeter ref='stats' hunger={this.state.hunger} /> : null }
         </div>
       );
